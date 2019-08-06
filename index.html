@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<<<<<<< HEAD
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>document.html — Joedit</title>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="lib/codemirror.js"></script>
+  <link rel="stylesheet" href="lib/codemirror.css">
+  <link rel="stylesheet" href="theme/base16-dark.css">
+  <script src="mode/xml/xml.js"></script>
+  <script src="mode/css/css.js"></script>
+  <script src="mode/javascript/javascript.js"></script>
+  <script src="mode/htmlmixed/htmlmixed.js"></script>
+  <script src="mode/clike/clike.js"></script>
+  <script src="mode/php/php.js"></script>
+  <script src="addon/hint/show-hint.js"></script>
+  <script src="addon/hint/css-hint.js"></script>
+  <script src="addon/hint/xml-hint.js"></script>
+  <script src="addon/hint/html-hint.js"></script>
+  <script src="addon/hint/javascript-hint.js"></script>
+  <script src="addon/edit/closetag.js"></script>
+  <script src="addon/edit/closebrackets.js"></script>
+  <script src="addon/emmet.js"></script>
+  <script src="fa.js"></script>
+  <link rel="stylesheet" href="addon/hint/show-hint.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .menu {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      height: 50px;
+      width: 100%;
+      background: #f5f6f7;
+      border-bottom: 1px solid #ccc;
+
+    }
+
+    .CodeMirror {
+      padding-top: 54px;
+      height: calc( 100vh - 54px);
+    }
+
+    section {
+      display: inline-block;
+    }
+
+    input[type="text"] {
+      margin: 10px;
+      color: #0a0a0a;
+      padding: 5px 10px;
+      background-color: #fefefe;
+      box-shadow: inset 0 1px 2px hsla(0, 0%, 4%, .1);
+      border: 1px solid #cacaca;
+      border-radius: 0;
+      transition: box-shadow .5s, border-color .25s ease-in-out;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    button.btn {
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      font-size: 1rem;
+      padding: 5px 10px;
+    }
+
+    button.btn:hover {
+      cursor: pointer;
+      background: #dddedf;
+    }
+
+    button.btn:active {
+      background: #d2d2d3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu ">
+    <input type="text" id="inputFileNameToSaveAs" placeholder="File Name" value="document.html" onkeyup="fileName()">
+    <a href="./index.html" target="_blank">
+      <button class="btn">
+        <i class="fa fa-file"></i>
+      </button>
+    </a>
+    <div class="file_upload" style="display: inline-block;">
+      <div style="display: inline-block;">
+        <span>
+          <button class="btn">
+            <i class="fa fa-folder-open"></i>
+          </button>
+        </span>
+      </div>
+      <input type="file" id="fileToLoad" name="file" onchange="loadFile()">
+      <button class="btn" type="submit" onclick="saveFile()">
+        <i class="fa fa-cloud-download-alt"></i>
+      </button>
+      <button class="btn" onclick="alert('Joedit by romankcode\nv2.0.3-codemirror-5.37.0\nTimestamp: 2:43-08.05.2018\nhttps://romankcode.tk/')">
+        <i class="fa fa-info-circle"></i>
+      </button>
+    </div>
+  </div>
+  <textarea id="code" name="code"></textarea>
+  <script>
+    var sitename = " — Joedit";
+    var autodetect = String($('#inputFileNameToSaveAs').val().match(/\.(\w+)/g));
+    var autodetect = autodetect.replace('.', '');
+    if (String(autodetect) === "html") {
+      var autodetect = "htmlmixed"
+    } if (String(autodetect) === "js") {
+      var autodetect = "javascript"
+    }
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      mode: autodetect,
+      theme: "base16-dark",
+      tabSize: 5,
+      firstLineNumber: 1,
+      tabMode: 'indent',
+      lineNumbers: true,
+      lineWrapping: true,
+      autoCloseTags: true,
+      autoCloseBrackets: true,
+      extraKeys: { "Ctrl-Space": "autocomplete" }
+    });
+    emmetCodeMirror(editor);
+  </script>
+  <script>
+    function fileName() {
+      document.title = $('#inputFileNameToSaveAs').val() + sitename;
+      var autodetect = String($('#inputFileNameToSaveAs').val().match(/\.(\w+)/g));
+      var autodetect = autodetect.replace('.', '');
+      if (String(autodetect) === "html") {
+        var autodetect = "htmlmixed"
+      } if (String(autodetect) === "js") {
+        var autodetect = "javascript"
+      }
+      editor.setOption("mode", autodetect);
+    }
+    function saveFile() {
+      var textToWrite = editor.getValue();
+      var textFileAsBlob = new Blob([textToWrite], { type: 'x/file' });
+      var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+      var downloadLink = document.createElement("a");
+      downloadLink.download = fileNameToSaveAs;
+      downloadLink.innerHTML = "Download File";
+      if (window.webkitURL != null) {
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+      }
+      else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = removeOnClick;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+      }
+
+      downloadLink.click();
+    }
+
+    function removeOnClick(event) {
+      document.body.removeChild(event.target);
+    }
+
+    function loadFile(input) {
+      var reader = new FileReader();
+      var input = document.getElementById("fileToLoad");
+      reader.onload = function (e) {
+        editor.setValue(e.target.result);
+      }
+      reader.readAsText(input.files[0]);
+      $('#inputFileNameToSaveAs').val(input.files[0].name);
+      document.title = $('#inputFileNameToSaveAs').val() + sitename;
+      var autodetect = String($('#inputFileNameToSaveAs').val().match(/\.(\w+)/g));
+      var autodetect = autodetect.replace('.', '');
+      if (String(autodetect) === "html") {
+        var autodetect = "htmlmixed"
+      } if (String(autodetect) === "js") {
+        var autodetect = "javascript"
+      }
+      editor.setOption("mode", autodetect);
+    }
+    $(function () {
+      var wrapper = $(".file_upload"),
+        inp = wrapper.find("input"),
+        dvl = wrapper.find("div");
+      lbl = wrapper.find("div span");
+      dvl.click(function () {
+        inp.click();
+      });
+      var file_api = (window.File && window.FileReader && window.FileList && window.Blob) ? true : false;
+      inp.change(function () {
+        var file_name;
+        if (file_api && inp[0].files[0])
+          file_name;
+        else
+          file_name;
+        if (!file_name.length)
+          return;
+        if (lbl.is(":visible")) {
+          lbl.text(file_name);
+          dvl.removeClass('color-nonactive');
+          dvl.removeClass('svg-gb');
+        }
+      }).change();
+    });
+  </script>
+  <script>if (window.module) module = window.module;</script>
+</body>
+
+=======
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>untitled.txt - Joedit</title>
+  <link rel='stylesheet prefetch' href='css/foundation.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="editor-holder">
+    <ul class="toolbar">
+            <li class="logo"><input class="filename" type="text" value="untitle.txt" id="inputFileNameToSaveAs"></li>
+            <li><a href="/app" target="_blank"><i class="fa fa-file"></i></a></li>
+            <li><a id="a-open"><i class="fa fa-folder-open"></i></a></li>
+            <li><a id="a-save"><i class="fa fa-cloud-download-alt"></i></a></li>
+            <li><a id="a-info"><i class="fa fa-info-circle"></i></a></li>
+    <div class="open">
+            <input type="file" id="fileToLoad">
+            <input class="btn" type="submit" value="Открыть" onclick="loadFileAsText()">
+    </div>
+    <div class="save">
+            <input class="btn" type="submit" value="Сохранить" onclick="saveTextAsFile()">
+    </div>
+    <div class="info">
+        <p>Code editor by hetop <small>ver.1.1.4</small> </p>
+        <p>Extension: highlight, emmet, soda theme</p>
+    </div>
+    </ul>
+    <textarea id="inputTextToSave" class="editor allow-tabs"></textarea>
+    <pre><code class="syntax-highight html"></code></pre>
+</div>
+<script src='js/jquery-2.2.4.min.js'></script>
+<script src='js/fontawesome.js'></script>
+<script src='js/emmet.min.js'></script>
+<script src='js/highlight.min.js'></script>
+<script  src="js/index.js"></script>
+<script>
+    var sitename = " - Joedit";
+     $('#a-open').click(function() {
+         $('.open').toggleClass('display');
+     });
+    $('#a-save').click(function() {
+        $('.save').toggleClass('display');
+    });
+    $('#a-info').click(function() {
+        $('.info').toggleClass('display');
+    });
+    $('.btn').click(function() {
+        $('.open').removeClass('display');
+        $('.save').removeClass('display');
+        $('.info').removeClass('display');
+    });
+    $('.filename').keyup(function() {
+        document.title = this.value + sitename;
+    });
+</script>
+</body>
+>>>>>>> Squashed commit of the following:
+</html>
