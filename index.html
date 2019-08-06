@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 
 <head>
   <meta charset="UTF-8">
@@ -223,63 +222,4 @@
   <script>if (window.module) module = window.module;</script>
 </body>
 
-=======
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>untitled.txt - Joedit</title>
-  <link rel='stylesheet prefetch' href='css/foundation.min.css'>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <div class="editor-holder">
-    <ul class="toolbar">
-            <li class="logo"><input class="filename" type="text" value="untitle.txt" id="inputFileNameToSaveAs"></li>
-            <li><a href="/app" target="_blank"><i class="fa fa-file"></i></a></li>
-            <li><a id="a-open"><i class="fa fa-folder-open"></i></a></li>
-            <li><a id="a-save"><i class="fa fa-cloud-download-alt"></i></a></li>
-            <li><a id="a-info"><i class="fa fa-info-circle"></i></a></li>
-    <div class="open">
-            <input type="file" id="fileToLoad">
-            <input class="btn" type="submit" value="Открыть" onclick="loadFileAsText()">
-    </div>
-    <div class="save">
-            <input class="btn" type="submit" value="Сохранить" onclick="saveTextAsFile()">
-    </div>
-    <div class="info">
-        <p>Code editor by hetop <small>ver.1.1.4</small> </p>
-        <p>Extension: highlight, emmet, soda theme</p>
-    </div>
-    </ul>
-    <textarea id="inputTextToSave" class="editor allow-tabs"></textarea>
-    <pre><code class="syntax-highight html"></code></pre>
-</div>
-<script src='js/jquery-2.2.4.min.js'></script>
-<script src='js/fontawesome.js'></script>
-<script src='js/emmet.min.js'></script>
-<script src='js/highlight.min.js'></script>
-<script  src="js/index.js"></script>
-<script>
-    var sitename = " - Joedit";
-     $('#a-open').click(function() {
-         $('.open').toggleClass('display');
-     });
-    $('#a-save').click(function() {
-        $('.save').toggleClass('display');
-    });
-    $('#a-info').click(function() {
-        $('.info').toggleClass('display');
-    });
-    $('.btn').click(function() {
-        $('.open').removeClass('display');
-        $('.save').removeClass('display');
-        $('.info').removeClass('display');
-    });
-    $('.filename').keyup(function() {
-        document.title = this.value + sitename;
-    });
-</script>
-</body>
->>>>>>> Squashed commit of the following:
 </html>
